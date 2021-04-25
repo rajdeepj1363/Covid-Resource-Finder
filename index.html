@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COVID-19 Resource Finder</title>
+
+    <!-- CSS Stylesheets -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" href="">
+</head>
+<body>
+    <div id="main-body">
+        <h1 style="text-align: center;">COVID-19 RESOURCE FINDER</h1>
+    <p  class="visit_counts" >VISITOR COUNT: <span id="visitor_count"></span> </p>
+    <div id="main">
+        <form action="" method="POST" >
+
+            <input type="text" name="place" id="place" placeholder="Enter City/Town name here" required><br>
+            <br>
+            <div id="options">
+                
+                        <input type="checkbox" name="beds" id="beds"  value="BED OR BEDS">
+                        <label for="">Beds</label>
+                        <input type="checkbox" name="oxygen" id="oxygen"  value="OR OXYGEN">
+                        <label for="">Oxygen</label>
+                        <input type="checkbox" name="food" id="food"  value="OR FOOD">
+                        <label for="">Food</label>
+                        <input type="checkbox" name="remdesivir" id="remdesivir"  value="OR Remdesivir">
+                        <label for="">Remdesivir</label>
+                  <br>
+                
+                        <input type="checkbox" name="fabiflu" id="Fabiflu"  value="OR Fabiflu">
+                        <label for="">Fabiflu</label> 
+                        <input type="checkbox" name="ventilator" id="Ventilator"  value="OR Ventilator">
+                        <label for="">Ventilator</label>
+                        <input type="checkbox" name="icu" id="ICU"  value="OR ICU">
+                        <label for="">ICU</label>
+                        <input type="checkbox" name="tests" id="tests"  value=" OR Tests">
+                        <label for="">Tests</label>
+                   
+            </div>
+            
+            
+            <br>
+            <button class="btn btn-primary searchBtn" type="button" onclick="generateLink()" > Search</button>
+        </form>
+        <br>
+        <br>
+        <p id="mandatory-msg" style="color:red">Please fill mandatory fields! Eg: City</p>
+        <a class="linkBtn">Go to Resources!</a>
+    </div>
+    </div>
+    
+
+    <div id="footer">
+        <p style="font-weight: 600;margin-top: 20px;">Developed By Rajdeep Jadhav</p>
+        <p>Stay safe, Stay Indoor. Follow all precautions! ❤️</p>
+        <a class="footer-icons" href="https://www.linkedin.com/in/rajdeepjadhav" style="font-size: 40px;margin-left: 10px;"><i class="fab fa-linkedin"></i></a>
+        <a class="footer-icons" href="https://www.instagram.com/rajdeepjadhav.ig" style="font-size: 40px;margin-left: 10px;color:#ff75a0"><i class="fab fa-instagram"></i></a>
+        <a class="footer-icons" href="https://github.com/rajdeepj1363" style="font-size: 40px;margin-left: 10px;color:black"><i class="fab fa-github"></i></a>        
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+        var count = document.getElementById("visitor_count")
+        fetch('https://api.countapi.xyz/update/covidResource/rajdeep1363/?amount=1').then(res=>res.json()).then(res=>count.innerHTML=res.value)
+  
+    function generateLink()
+    {
+        var beds = "";
+        var oxygen = "";
+        var food = "";
+        var remdesivir = "";
+        var Fabiflu = "";
+        var ICU = "";
+        var Ventilator = "";
+        var tests = "";
+
+        if(document.getElementById("beds").checked == true)
+        {
+            var beds = document.getElementById("beds").value
+        }
+        if(document.getElementById("oxygen").checked == true)
+        {
+            var oxygen = document.getElementById("oxygen").value
+        }
+        if(document.getElementById("food").checked == true)
+        {
+            var food = document.getElementById("food").value
+        }
+        if(document.getElementById("remdesivir").checked == true)
+        {
+            var remdesivir = document.getElementById("remdesivir").value
+        }
+        if(document.getElementById("Fabiflu").checked == true)
+        {
+            var Fabiflu = document.getElementById("Fabiflu").value
+        }
+        if(document.getElementById("tests").checked == true)
+        {
+            var tests = document.getElementById("tests").value
+        }
+        if(document.getElementById("Ventilator").checked == true)
+        {
+            var Ventilator = document.getElementById("Ventilator").value
+        }
+        if(document.getElementById("ICU").checked == true)
+        {
+            var ICU = document.getElementById("ICU").value
+        }
+        
+        var parameters = document.getElementById("place").value+"%28+"+beds+"+"+oxygen+"+"+food+"+"+remdesivir+"+"+Fabiflu+"+"+Ventilator+"+"+tests+"+"+ICU;
+        console.log(parameters)
+        var url = "https://twitter.com/search?q=verified+"+parameters+"%29+-%22not+verified%22+-%22unverified%22+-%22needed%22+-%22need%22+-%22needs%22+-%22required%22+-%22require%22+-%22requires%22+-%22requirement%22+-%22requirements%22&f=live";
+        if(document.getElementById("place").value != "")
+        {
+            document.querySelector(".linkBtn").style.visibility = "visible";
+            document.querySelector(".linkBtn").href = url;
+        }
+        else
+        {
+            
+            document.getElementById("mandatory-msg").style.visibility = "visible";
+            setTimeout(function(){
+                document.getElementById("mandatory-msg").style.visibility = "hidden";
+            },5000)
+        }
+    }
+
+</script>
+</html>
