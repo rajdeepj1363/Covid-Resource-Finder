@@ -40,6 +40,16 @@
                         <label for="">ICU</label>
                         <input type="checkbox" name="tests" id="tests"  value=" OR Tests">
                         <label for="">Tests</label>
+                  <br>
+                        <input type="checkbox" name="plasma" id="Plasma"  value="OR Plasma">
+                        <label for="">Plasma</label> 
+                        <input type="checkbox" name="tocilizumab" id="Tocilizumab"  value="OR Tocilizumab">
+                        <label for="">Tocilizumab</label>
+                        <input type="checkbox" name="icu" id="Favipiravir"  value="OR Favipiravir">
+                        <label for="">Favipiravir</label>
+                  <br>
+                        <label for="">Others:</label>
+                        <input type="text" name="others" id="Others" placeholder="Please type keywords / Dont type Sentence">
                    
             </div>
             
@@ -53,7 +63,7 @@
         <br>
         <br>
         <p id="mandatory-msg" style="color:red">Please fill mandatory fields! Eg: City</p>
-        <a class="linkBtn">Go to Resources!</a>
+        <a class="linkBtn" onclick="goToLink()">Go to Resources!</a>
     </div>
     </div>
     
@@ -70,12 +80,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
     var count = document.getElementById("visitor_count")
+    var url = "";
     fetch('https://api.countapi.xyz/get/covidResource/rajdeep1363/').then(res=>res.json()).then(res=>count.innerHTML=res.value)
     function generateLink()
     {
-        var count = document.getElementById("visitor_count")
-        fetch('https://api.countapi.xyz/update/covidResource/rajdeep1363/?amount=1').then(res=>res.json()).then(res=>count.innerHTML=res.value)
-  
+        
         var beds = "";
         var oxygen = "";
         var food = "";
@@ -84,6 +93,11 @@
         var ICU = "";
         var Ventilator = "";
         var tests = "";
+        var plasma = "";
+        var favipiravir = "";
+        var tocilizumab = "";
+        var others = "";
+        
 
         if(document.getElementById("beds").checked == true)
         {
@@ -117,10 +131,26 @@
         {
             var ICU = document.getElementById("ICU").value
         }
+        if(document.getElementById("Plasma").checked == true)
+        {
+            var plasma = document.getElementById("Plasma").value
+        }
+        if(document.getElementById("Tocilizumab").checked == true)
+        {
+            var tocilizumab = document.getElementById("Tocilizumab").value
+        }
+        if(document.getElementById("Favipiravir").checked == true)
+        {
+            var favipiravir = document.getElementById("Favipiravir").value
+        }
+        if(document.getElementById("Others").value != "")
+        {
+            var others = "OR "+document.getElementById("Others").value
+        }
         
-        var parameters = document.getElementById("place").value+"%28+"+beds+"+"+oxygen+"+"+food+"+"+remdesivir+"+"+Fabiflu+"+"+Ventilator+"+"+tests+"+"+ICU;
+        var parameters = document.getElementById("place").value+"%28+"+beds+"+"+oxygen+"+"+food+"+"+remdesivir+"+"+Fabiflu+"+"+Ventilator+"+"+tests+"+"+ICU+"+"+plasma+"+"+tocilizumab+"+"+favipiravir+"+"+others;
         console.log(parameters)
-        var url = "https://twitter.com/search?q=verified+"+parameters+"%29+-%22not+verified%22+-%22unverified%22+-%22needed%22+-%22need%22+-%22needs%22+-%22required%22+-%22require%22+-%22requires%22+-%22requirement%22+-%22requirements%22&f=live";
+        url = "https://twitter.com/search?q=verified+"+parameters+"%29+-%22not+verified%22+-%22unverified%22+-%22needed%22+-%22need%22+-%22needs%22+-%22required%22+-%22require%22+-%22requires%22+-%22requirement%22+-%22requirements%22&f=live";
         if(document.getElementById("place").value != "")
         {
             document.querySelector(".linkBtn").style.visibility = "visible";
@@ -134,6 +164,12 @@
                 document.getElementById("mandatory-msg").style.visibility = "hidden";
             },5000)
         }
+    }
+    function goToLink()
+    {
+        var count = document.getElementById("visitor_count")
+        fetch('https://api.countapi.xyz/update/covidResource/rajdeep1363/?amount=1').then(res=>res.json()).then(res=>count.innerHTML=res.value)
+        window.location = url;
     }
 
 </script>

@@ -62,9 +62,13 @@
     -webkit-transform: translate(-50%,-50%);
     transform: translate(-50%,-50%);
 }
-#main input[type=text]
+#main input[name=place]
 {
     width: 100%;
+}
+#main input[name=others]
+{
+    width:320px;
 }
 .linkBtn
 {
